@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,6 +29,9 @@ public class AIController : MonoBehaviour
     public float visionPersistence = 0.5f; // seconds to keep seeing after losing sight
     private float lastSeenTime = -999f;
 
+    [Header("Patrol Point Settings")]
+    public GameObject patrolPoint;
+    public float patrolPointSpawnTimer = 6.0f;
 
     // Add State Machine code Here
     void Start()
@@ -38,7 +42,7 @@ public class AIController : MonoBehaviour
 
                  StateMachine = new StateMachine();
         StateMachine.AddState(new IdleState(this));
-        StateMachine.AddState(new PatrolState(this));
+        StateMachine.AddState(new Roamingstate(this));
         StateMachine.AddState(new ChaseState(this));
         StateMachine.AddState(new AttackState(this)); // Add the new AttackState 
 
@@ -104,7 +108,7 @@ public class AIController : MonoBehaviour
         foreach (Transform hand in handTransforms)
         {
             // Overlap check — sphere or capsule works well for melee hitboxes
-            Collider[] hits = Physics.OverlapSphere(hand.position, 0.5f, PlayerLayer);
+            Collider[] hits = Physics.OverlapSphere(hand.position, 1, PlayerLayer);
 
             foreach (var hit in hits)
             {
@@ -119,7 +123,6 @@ public class AIController : MonoBehaviour
         return false;
     }
     
-
 
     // New method to check if the AI is within attack range
     public bool IsPlayerInAttackRange()
