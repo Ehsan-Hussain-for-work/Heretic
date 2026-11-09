@@ -63,9 +63,7 @@ aiController.Agent.remainingDistance <= aiController.Agent.stoppingDistance)
         if (aiController.Waypoints.Length == 0)
             return;
 
-        aiController.Agent.destination =
-aiController.Waypoints[currentWaypointIndex].position;
-        currentWaypointIndex = (currentWaypointIndex + 1) %
-aiController.Waypoints.Length;
+        aiController.Agent.destination = aiController.Waypoints[currentWaypointIndex].position;
+        currentWaypointIndex = (currentWaypointIndex + 1) % aiController.Waypoints.Length;
     }
 }
