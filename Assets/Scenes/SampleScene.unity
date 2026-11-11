@@ -1388,7 +1388,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1595,6 +1595,18 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 711391913}
+    - target: {fileID: 6587653844168634729, guid: 61b398e2fe38a0349a74a6df3d943017, type: 3}
+      propertyPath: leftHandTransform
+      value: 
+      objectReference: {fileID: 1019312251}
+    - target: {fileID: 6587653844168634729, guid: 61b398e2fe38a0349a74a6df3d943017, type: 3}
+      propertyPath: rightLegTransform
+      value: 
+      objectReference: {fileID: 1543837350}
+    - target: {fileID: 6587653844168634729, guid: 61b398e2fe38a0349a74a6df3d943017, type: 3}
+      propertyPath: rightHandTransform
+      value: 
+      objectReference: {fileID: 1103936723}
     - target: {fileID: 7371783029187787830, guid: 61b398e2fe38a0349a74a6df3d943017, type: 3}
       propertyPath: m_Name
       value: SkeletonBodyPart@Idle (2)
@@ -2762,8 +2774,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   currentState: 0
-  leftHandTransform: {fileID: 282238197}
-  rightHandTransform: {fileID: 918138138}
+  leftHandTransform: {fileID: 1019312251}
+  rightHandTransform: {fileID: 1103936723}
   rightLegTransform: {fileID: 0}
   viewDistance: 10
   viewAngle: 90
