@@ -110,7 +110,7 @@ public class AIController : MonoBehaviour
         foreach (Transform hand in handTransforms)
         {
             // Overlap check — sphere or capsule works well for melee hitboxes
-            Collider[] hits = Physics.OverlapSphere(hand.position, 5, PlayerLayer);
+            Collider[] hits = Physics.OverlapSphere(hand.position, 2, PlayerLayer);
 
             foreach (var hit in hits)
             {
@@ -132,7 +132,7 @@ public class AIController : MonoBehaviour
         foreach (Transform leg in legTransforms)
         {
             // Overlap check — sphere or capsule works well for melee hitboxes
-            Collider[] hits = Physics.OverlapSphere(leg.position, 1, PlayerLayer);
+            Collider[] hits = Physics.OverlapSphere(leg.position, 2, PlayerLayer);
 
             foreach (var hit in hits)
             {

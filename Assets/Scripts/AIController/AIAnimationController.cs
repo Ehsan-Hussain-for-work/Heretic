@@ -29,13 +29,18 @@ public class AIAnimationController : MonoBehaviour
         animator.SetFloat("CharacterSpeed", speed);
     }
 
-    void HitPlayer() // Attack Animation Event to check if the player his hit 
+    void HitPlayerHook() // Attack Animation Event to check if the player his hit 
     {
         GameObject objectHit;
         if (aiController.CheckHandsCollision(out objectHit, "Player"))
         {
             Debug.Log("Player hit by a punch!");
         }
+    }
+
+    void HitPlayerKick() // Attack Animation Event to check if the player his hit 
+    {
+        GameObject objectHit;
         if (aiController.CheckLegCollision(out objectHit, "Player"))
         {
             Debug.Log("Player hit by a kick!");

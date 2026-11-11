@@ -2318,7 +2318,7 @@ GameObject:
   - component: {fileID: 6587653844168634729}
   - component: {fileID: 8568744634434340385}
   m_Layer: 0
-  m_Name: SkeletonBodyPart@Idle (2)
+  m_Name: SkeletonBodyPart@Idle (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2333,7 +2333,7 @@ Transform:
   m_GameObject: {fileID: 7371783029187787830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5362685, y: -0.00000040459963, z: -25.471804}
+  m_LocalPosition: {x: 16.92, y: 0.0000001176883, z: -28.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2410,13 +2410,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   Player: {fileID: 0}
-  AttackRange: 5
+  AttackRange: 3.5
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
   currentState: 0
-  leftHandTransform: {fileID: 1661865494519141786}
-  rightHandTransform: {fileID: 1593296499809377135}
+  leftHandTransform: {fileID: 3508542282298168484}
+  rightHandTransform: {fileID: 8302685530556694191}
   rightLegTransform: {fileID: 2778271827835129789}
   viewDistance: 10
   viewAngle: 90
