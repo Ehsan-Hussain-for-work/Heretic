@@ -18,7 +18,7 @@ public class ChaseState : IState
     {
         if (!aiController.CanSeePlayer())
         {
-            aiController.StateMachine.TransitionToState(StateType.Patrol);
+            aiController.StateMachine.TransitionToState(StateType.Roaming);
             return;
         }
 
@@ -29,6 +29,11 @@ public class ChaseState : IState
         }
 
         aiController.Agent.destination = aiController.Player.position;
+
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
+        }
     }
 
     public void Exit()

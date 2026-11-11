@@ -1,10 +1,11 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AttackState : IState
 {
     private AIController aiController;
-    private float attackCooldown = 1.5f; // seconds between attacks 
+    private float attackCooldown = 3f; // seconds between attacks 
     private float lastAttackTime = -999f;
 
     public StateType Type => StateType.Attack;
@@ -22,8 +23,7 @@ public class AttackState : IState
     public void Execute()
     {
         // If player moves out of attack range, go back to chase 
-        if (Vector3.Distance(aiController.transform.position,
-aiController.Player.position) > aiController.AttackRange)
+        if (Vector3.Distance(aiController.transform.position, aiController.Player.position) > aiController.AttackRange)
         {
             aiController.StateMachine.TransitionToState(StateType.Chase);
             return;
@@ -33,7 +33,21 @@ aiController.Player.position) > aiController.AttackRange)
         if (Time.time - lastAttackTime > attackCooldown)
         {
             lastAttackTime = Time.time;
-            aiController.aiAnimationController.animator.SetTrigger("doAttack");
+            
+            int num = Random.Range(0, 2); // Randomly choose between kick and punch
+
+            if (num == 0)
+            {
+                aiController.aiAnimationController.animator.SetTrigger("doKick");
+            }
+            else
+            {
+                aiController.aiAnimationController.animator.SetTrigger("doAttack");
+            }
+        }
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
         }
     }
 

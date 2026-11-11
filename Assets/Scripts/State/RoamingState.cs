@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class Roamingstate : IState
 {
     private AIController aiController;
-    private int currentWaypointIndex = 0;
     private bool isWaiting = false;
 
-    public StateType Type => StateType.Patrol;
+    public StateType Type => StateType.Roaming;
 
     public Roamingstate(AIController aiController)
     {
@@ -36,6 +36,11 @@ aiController.Agent.remainingDistance <= aiController.Agent.stoppingDistance)
             aiController.StartCoroutine(WaitAndAnimate());
         }
 
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
+        }
+
     }
 
     public void Exit()
@@ -48,10 +53,9 @@ aiController.Agent.remainingDistance <= aiController.Agent.stoppingDistance)
         isWaiting = true;
         aiController.Agent.isStopped = true;
 
-        // Play patrol point animation 
-        aiController.aiAnimationController.animator.SetTrigger("doScream");
         // Wait for animation duration (1.5 sec here, adjust to your animation length) 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
+        
 
         aiController.Agent.isStopped = false;
         MoveToNextWaypoint();
@@ -60,6 +64,24 @@ aiController.Agent.remainingDistance <= aiController.Agent.stoppingDistance)
 
     private void MoveToNextWaypoint()
     {
-            aiController.Agent.destination = aiController.Agent.transform.position +  new Vector3(Random.Range(-5,5),0,Random.Range(-5,5));
+        NavMeshAgent agent = aiController.Agent;
+
+            Vector3 randomPosition = agent.transform.position +
+                new Vector3(Random.Range(-10f, 10f), 0, Random.Range(-10f, 10f));
+
+            NavMeshHit hit; // the position we will have to check if the enemy can reach it (navmesh related)
+
+        if (NavMesh.SamplePosition(randomPosition, out hit, 2f, agent.areaMask)) //check whether the random position can be reached by the enemy (navmesh related)
+        {
+                NavMeshPath path = new NavMeshPath();
+
+                // Check whether the enemy can reach that destination
+                if (agent.CalculatePath(hit.position, path) && path.status == NavMeshPathStatus.PathComplete) // calculate path checks whether the enemy can even reach the destination, and makes sure the path is complete (not partial) 
+            {
+                    agent.SetDestination(hit.position);
+                    return;
+                }
+            
+        }
     }
 }

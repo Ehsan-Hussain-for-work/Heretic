@@ -27,8 +27,6 @@ public class AIAnimationController : MonoBehaviour
     {
         float speed = agent != null ? agent.velocity.magnitude : 0f;
         animator.SetFloat("CharacterSpeed", speed);
-
-        Debug.Log("Enemy Speed: " + speed);
     }
 
     void HitPlayer() // Attack Animation Event to check if the player his hit 

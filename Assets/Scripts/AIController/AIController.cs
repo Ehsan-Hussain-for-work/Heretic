@@ -29,9 +29,9 @@ public class AIController : MonoBehaviour
     public float visionPersistence = 0.5f; // seconds to keep seeing after losing sight
     private float lastSeenTime = -999f;
 
-    [Header("Patrol Point Settings")]
-    public GameObject patrolPoint;
-    public float patrolPointSpawnTimer = 6.0f;
+    [Header("Enemy Stats")]
+    public int health = 100;
+    public int damage = 20;
 
     // Add State Machine code Here
     void Start()
@@ -142,6 +142,15 @@ public class AIController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary * viewDistance);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary * viewDistance);
+    }
+
+    public void Die()
+    {
+        Agent.isStopped = true;
+        aiAnimationController.animator.SetTrigger("doDeath");
+
+        // Destroy the enemy after 3 seconds
+        Destroy(gameObject, 5f);
     }
 
 }

@@ -26,7 +26,12 @@ public class IdleState : IState
         idleTimer += Time.deltaTime;
         if (idleTimer >= idleDuration)
         {
-            aiController.StateMachine.TransitionToState(StateType.Patrol);
+            aiController.StateMachine.TransitionToState(StateType.Roaming);
+        }
+
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
         }
     }
 
