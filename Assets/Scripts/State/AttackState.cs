@@ -22,6 +22,11 @@ public class AttackState : IState
 
     public void Execute()
     {
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
+        }
+
         // If player moves out of attack range, go back to chase 
         if (Vector3.Distance(aiController.transform.position, aiController.Player.position) > aiController.AttackRange)
         {
@@ -38,16 +43,12 @@ public class AttackState : IState
 
             if (num == 0)
             {
-                aiController.aiAnimationController.animator.SetTrigger("doKick");
+                aiController.aiAnimationController.animator.SetTrigger("doKick");                
             }
             else
             {
-                aiController.aiAnimationController.animator.SetTrigger("doAttack");
+                aiController.aiAnimationController.animator.SetTrigger("doAttack");            
             }
-        }
-        if (aiController.health <= 0)
-        {
-            aiController.Die();
         }
     }
 

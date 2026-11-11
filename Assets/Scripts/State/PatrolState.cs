@@ -24,6 +24,11 @@ public class PatrolState : IState
 
     public void Execute()
     {
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
+        }
+
         if (aiController.CanSeePlayer())
         {
             aiController.StateMachine.TransitionToState(StateType.Chase);

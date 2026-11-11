@@ -24,6 +24,11 @@ public class Roamingstate : IState
 
     public void Execute()
     {
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
+        }
+
         if (aiController.CanSeePlayer())
         {
             aiController.StateMachine.TransitionToState(StateType.Chase);
@@ -34,11 +39,6 @@ public class Roamingstate : IState
 aiController.Agent.remainingDistance <= aiController.Agent.stoppingDistance)
         {
             aiController.StartCoroutine(WaitAndAnimate());
-        }
-
-        if (aiController.health <= 0)
-        {
-            aiController.Die();
         }
 
     }

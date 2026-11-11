@@ -18,6 +18,8 @@ public class AIController : MonoBehaviour
     [Header("Attack Settings")]
     public Transform leftHandTransform;
     public Transform rightHandTransform;
+
+    public Transform rightLegTransform;
     [Header("Vision Settings")]
     public float viewDistance = 10f;
     public float viewAngle = 90f;
@@ -108,7 +110,7 @@ public class AIController : MonoBehaviour
         foreach (Transform hand in handTransforms)
         {
             // Overlap check — sphere or capsule works well for melee hitboxes
-            Collider[] hits = Physics.OverlapSphere(hand.position, 1, PlayerLayer);
+            Collider[] hits = Physics.OverlapSphere(hand.position, 5, PlayerLayer);
 
             foreach (var hit in hits)
             {
@@ -122,7 +124,29 @@ public class AIController : MonoBehaviour
         collidedObject = null;
         return false;
     }
-    
+    public bool CheckLegCollision(out GameObject collidedObject, string Tag)
+    {
+        // You can define these in AIController (leftHandPoint, rightHandPoint)
+        Transform[] legTransforms = { rightLegTransform };
+
+        foreach (Transform leg in legTransforms)
+        {
+            // Overlap check — sphere or capsule works well for melee hitboxes
+            Collider[] hits = Physics.OverlapSphere(leg.position, 1, PlayerLayer);
+
+            foreach (var hit in hits)
+            {
+                if (hit.CompareTag(Tag))
+                {
+                    collidedObject = hit.gameObject;
+                    return true;
+                }
+            }
+        }
+        collidedObject = null;
+        return false;
+    }
+
 
     // New method to check if the AI is within attack range
     public bool IsPlayerInAttackRange()

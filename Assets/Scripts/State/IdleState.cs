@@ -23,15 +23,15 @@ public class IdleState : IState
 
     public void Execute()
     {
+        if (aiController.health <= 0)
+        {
+            aiController.Die();
+        }
+
         idleTimer += Time.deltaTime;
         if (idleTimer >= idleDuration)
         {
             aiController.StateMachine.TransitionToState(StateType.Roaming);
-        }
-
-        if (aiController.health <= 0)
-        {
-            aiController.Die();
         }
     }
 

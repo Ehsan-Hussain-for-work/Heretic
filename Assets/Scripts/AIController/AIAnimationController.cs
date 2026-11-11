@@ -34,8 +34,11 @@ public class AIAnimationController : MonoBehaviour
         GameObject objectHit;
         if (aiController.CheckHandsCollision(out objectHit, "Player"))
         {
-
-            SceneManager.LoadScene(0); 
+            Debug.Log("Player hit by a punch!");
+        }
+        if (aiController.CheckLegCollision(out objectHit, "Player"))
+        {
+            Debug.Log("Player hit by a kick!");
         }
     }
 
