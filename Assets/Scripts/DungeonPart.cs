@@ -14,6 +14,12 @@ public class DungeonPart : MonoBehaviour
 
     public bool HasAvailableEntry(out Transform entrypoint)
     {
+        if (entries == null || entries.Count == 0)
+        {
+            entrypoint = null;
+            return false;
+        }
+
         Transform entryResult = null;
         bool result = false;
 
@@ -41,7 +47,7 @@ public class DungeonPart : MonoBehaviour
             }
         }
 
-        while (entryResult == null && retryIndex < totalRetry)
+        while (entryResult == null && retryIndex < totalRetry) //no infinite retries
         {
             int randEntryIndex = Random.Range(0, entries.Count);
             Transform entry = entries[randEntryIndex];
@@ -63,7 +69,7 @@ public class DungeonPart : MonoBehaviour
         return result;
     }
 
-    public void UnusedEntrypoint(Transform entrypoint)
+    public void UnusedEntry(Transform entrypoint)
     {
         if (entrypoint.TryGetComponent<EntryPoint>(out EntryPoint entry))
         {
