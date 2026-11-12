@@ -407,7 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
   m_SerializedVersion: 0
   m_AgentTypeID: 0
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
@@ -423,7 +423,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: dfd6d68539b04c346883b8ee000dac8d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: c84c4de30e8eb1743aafb7ba7ceb2d08, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &97820801
 MonoBehaviour:
@@ -439,12 +439,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
   m_SerializedVersion: 0
   m_AgentTypeID: -1372625422
-  m_CollectObjects: 0
+  m_CollectObjects: 2
   m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.6666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: c84c4de30e8eb1743aafb7ba7ceb2d08, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: dfd6d68539b04c346883b8ee000dac8d, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &119281503
 GameObject:
@@ -1493,7 +1493,7 @@ Transform:
   m_GameObject: {fileID: 711391908}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: -1.26, y: 1.42, z: -21.13}
+  m_LocalPosition: {x: -6.08, y: 1.42, z: -17.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2242,10 +2242,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AIControllerKnight
   Waypoints: []
   Player: {fileID: 711391913}
-  AttackRange: 2
+  AttackRange: 5
   PlayerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   currentState: 0
   hammerTransform: {fileID: 382384799}
   rightLegTransform: {fileID: 0}
@@ -4065,6 +4065,22 @@ PrefabInstance:
     - target: {fileID: 2190571148578332653, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4885707003729977133, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448421048754803494, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      propertyPath: m_Height
+      value: 5.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448421048754803494, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5448421048754803494, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8114570171245560914, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
