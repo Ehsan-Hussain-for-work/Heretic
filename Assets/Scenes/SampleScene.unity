@@ -1071,6 +1071,11 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!4 &382384799 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 206951887852100304, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+  m_PrefabInstance: {fileID: 3762618452910800303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &387733696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,6 +2223,56 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.3438214, y: -0.09450677, z: -0.060866013}
     m_Extent: {x: 0.1641022, y: 0.30676898, z: 0.13309786}
   m_DirtyAABB: 0
+--- !u!1 &1441307227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2190571148578332653, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+  m_PrefabInstance: {fileID: 3762618452910800303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1441307235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441307227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848bd20328de29740b2a7b7d627f843e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIControllerKnight
+  Waypoints: []
+  Player: {fileID: 711391913}
+  AttackRange: 2
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  currentState: 0
+  hammerTransform: {fileID: 382384799}
+  rightLegTransform: {fileID: 0}
+  viewDistance: 10
+  viewAngle: 90
+  eyeHeight: 1.6
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  visionPersistence: 0.5
+  health: 100
+  damage: 20
+--- !u!114 &1441307236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441307227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208ecec7a7eef804785dac927f372f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AIAnimationControllerKnight
 --- !u!1 &1466670377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,10 +4062,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight@Idle
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2190571148578332653, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 8114570171245560914, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+    - {fileID: 965938013309889386, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2190571148578332653, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1441307236}
+    - targetCorrespondingSourceObject: {fileID: 2190571148578332653, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1441307235}
   m_SourcePrefab: {fileID: 100100000, guid: b89f612343f5eda45b135e5febb3944e, type: 3}
 --- !u!1001 &7739955597016104550
 PrefabInstance:
