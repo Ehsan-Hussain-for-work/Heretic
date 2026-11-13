@@ -33,6 +33,7 @@ public class AIController : MonoBehaviour
 
     [Header("Enemy Stats")]
     public int health = 100;
+    public bool isDead = false;
     public int damage = 20;
 
     // Add State Machine code Here
@@ -170,11 +171,16 @@ public class AIController : MonoBehaviour
 
     public void Die()
     {
+        if (isDead)
+            return;
+
         Agent.isStopped = true;
+        Agent.enabled = false;
         aiAnimationController.animator.SetTrigger("doDeath");
 
         // Destroy the enemy after 3 seconds
         Destroy(gameObject, 5f);
+        isDead = true;
     }
 
 }

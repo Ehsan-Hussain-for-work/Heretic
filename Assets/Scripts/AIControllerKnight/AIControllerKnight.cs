@@ -33,16 +33,18 @@ public class AIControllerKnight : MonoBehaviour
 
     [Header("Enemy Stats")]
     public int health = 100;
+    public bool isDead = false;
     public int damage = 20;
 
     // Add State Machine code Here
     void Start()
     {
         Agent = GetComponent<NavMeshAgent>();
-        aiAnimationController = GetComponent<AIAnimationControllerKnight>();
+        aiAnimationController = GetComponent<AIAnimationControllerKnight>();;
+
         // Animator = GetComponent<Animator>(); // Commented out since we're not using animations
 
-                 StateMachine = new StateMachine();
+        StateMachine = new StateMachine();
         StateMachine.AddState(new IdleStateKnight(this));
         StateMachine.AddState(new RoamingstateKnight(this));
         StateMachine.AddState(new ChaseStateKnight(this));
@@ -148,11 +150,17 @@ public class AIControllerKnight : MonoBehaviour
 
     public void Die()
     {
+        if (isDead)
+            return;
+
         Agent.isStopped = true;
+        Agent.enabled = false;
+        
         aiAnimationController.animator.SetTrigger("doDeath");
 
         // Destroy the enemy after 3 seconds
         Destroy(gameObject, 5f);
+        isDead = true;
     }
 
 }
