@@ -169,23 +169,29 @@ public class DungeonGenerator : MonoBehaviour
     private bool CheckIntersection(DungeonPart dungeonPart)
     {
         bool didIntersect = false;
-        Collider[] hits = Physics.OverlapBox(
-            dungeonPart.collider.bounds.center,
-            dungeonPart.collider.bounds.size / 2, //apparently OverlapBox() doubles this
-            Quaternion.identity, roomsLM //apparently this isn't taking rotations into count
-        );
-
-        foreach (Collider hit in hits)
+        foreach (Collider collider in dungeonPart.colliders)
         {
-            if (hit == dungeonPart.collider) //room hits itself
-            {
-                continue; //"we don't care" response
-            }
 
-            if (hit != dungeonPart.collider) //room hits something else
+            Collider[] hits = Physics.OverlapBox(
+                dungeonPart.collider.bounds.center,
+                dungeonPart.collider.bounds.size / 2, //apparently OverlapBox() doubles this
+                Quaternion.identity, roomsLM //apparently this isn't taking rotations into count
+            );
+
+            foreach (Collider hit in hits)
             {
-                didIntersect = true;
-                break;
+                bool didHitDungeonPart = false;
+
+                if (hit == collider) //room hits itself
+                {
+                    continue; //"we don't care" response
+                }
+
+                if (hit != collider) //room hits something else
+                {
+                    didIntersect = true;
+                    break;
+                }
             }
         }
 

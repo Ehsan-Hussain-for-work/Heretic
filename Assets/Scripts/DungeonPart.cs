@@ -11,6 +11,7 @@ public class DungeonPart : MonoBehaviour
 
     public List<Transform> entries;
     public new Collider collider; //checks overlapping rooms (new = hide an accessible member)
+    public Collider[] colliders;
 
     public bool HasAvailableEntry(out Transform entrypoint)
     {
