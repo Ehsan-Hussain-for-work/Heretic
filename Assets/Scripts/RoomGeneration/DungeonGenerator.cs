@@ -13,7 +13,7 @@ public class DungeonGenerator : MonoBehaviour
     private List<GameObject> rooms; //rooms that can spawn
 
     [SerializeField]
-    private List<GameObject> specialRooms; //rooms with unique probabilities (boss rooms)
+    private List<GameObject> specialRooms; //rooms with unique probabilities (boss rooms probably)
 
     //! [SerializeField] //"Lethal Company fire exit"? (Might delete)
     //! private List<GameObject> alternateEntrances;
@@ -173,8 +173,8 @@ public class DungeonGenerator : MonoBehaviour
         {
 
             Collider[] hits = Physics.OverlapBox(
-                dungeonPart.collider.bounds.center,
-                dungeonPart.collider.bounds.size / 2, //apparently OverlapBox() doubles this
+                collider.bounds.center,
+                collider.bounds.size / 2, //apparently OverlapBox() doubles this
                 Quaternion.identity, roomsLM //apparently this isn't taking rotations into count
             );
 
