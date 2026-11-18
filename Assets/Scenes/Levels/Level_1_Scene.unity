@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &394891466 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8909904628086460913, guid: 56516e968b69dd94db3284b58ab756bf, type: 3}
-  m_PrefabInstance: {fileID: 598666694}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &598666694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -182,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8909904628086460913, guid: 56516e968b69dd94db3284b58ab756bf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -355,12 +350,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02172fd11694d314e991dfbb438c0821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DungeonGenerator
-  entrance: {fileID: 394891466}
+  entrance: {fileID: 8909904628086460913, guid: 56516e968b69dd94db3284b58ab756bf, type: 3}
   rooms:
   - {fileID: 8909904628086460913, guid: 56516e968b69dd94db3284b58ab756bf, type: 3}
   - {fileID: 8909904628086460913, guid: 98dc987920c5c2e41906898cb712d634, type: 3}
+  - {fileID: 8909904628086460913, guid: e2f7bbeaa15ccf8458a48b6bc19b9fc1, type: 3}
   specialRooms: []
-  RoomNum: 10
+  RoomNum: 15
   roomsLM:
     serializedVersion: 2
     m_Bits: 64

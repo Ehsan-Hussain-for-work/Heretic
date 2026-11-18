@@ -18,9 +18,6 @@ public class DungeonGenerator : MonoBehaviour
     //! [SerializeField] //"Lethal Company fire exit"? (Might delete)
     //! private List<GameObject> alternateEntrances;
 
-    //TODO [SerializeField] //missing door logic (maybe next build?)
-    //TODO private GameObject door; //prefab to separate rooms
-
     [SerializeField]
     private int RoomNum = 10; //total num of rooms
 
@@ -57,7 +54,7 @@ public class DungeonGenerator : MonoBehaviour
                     transform.position,
                     transform.rotation
                 );
-                Debug.Log("Starting room instantiated: " + genRoom.name);
+                //Debug.Log("Starting room instantiated: " + genRoom.name);
 
                 if (genRoom.TryGetComponent<DungeonPart>(out DungeonPart dungeonPart))
                 {
@@ -65,7 +62,7 @@ public class DungeonGenerator : MonoBehaviour
                     //dungeonPart.Spawn(true);
                     genRooms.Add(dungeonPart);
                 }
-                Debug.Log("Room added to generation list: " + dungeonPart.name);
+                //Debug.Log("Room added to generation list: " + dungeonPart.name);
 
             }
             else
@@ -91,16 +88,13 @@ public class DungeonGenerator : MonoBehaviour
 
                 if (randGenRoom == null || room1Entry == null)
                 {
-                    Debug.LogWarning("No available room entry points!");
-                    //* Destroy(item); //idk what "item" reps here.
+                    Debug.LogWarning("No available room entry points.");
                     break;
                 }
 
-                //TODO when doors can be used
                 // GameObject alignedDoor = Instantiate(door, transform.position, transform.rotation);
-                //door.GetComponent().Spawn(true); //?not working
 
-                GameObject newGenRoom; //?already in use for me, but not him
+                GameObject newGenRoom;
 
                 //TODO: when bosses are ready
                 // if (specialRooms.Count > 0)
@@ -117,29 +111,36 @@ public class DungeonGenerator : MonoBehaviour
 
                 if (newGenRoom.TryGetComponent<DungeonPart>(out DungeonPart dungeonPart))
                 {
-                    //? dungeonPart.Spawn(true);
-
                     if (dungeonPart.HasAvailableEntry(out Transform room2Entry))
                     {
-                        genRooms.Add(dungeonPart);
-                        Debug.Log("Aligning new room: " + newGenRoom.name);
+                        //*genRooms.Add(dungeonPart);
+                        //Debug.Log("Aligning new room: " + newGenRoom.name);
                         //TODO alignedDoor.transform.position = room1Entry.position;
                         //TODO alignedDoor.transform.rotation = room2Entry.rotation;
                         AlignRooms(
-                            //? randGenRoom.transform, //arg 1 isn't used.
                             newGenRoom.transform,
                             room1Entry,
                             room2Entry
                         );
-                        Debug.Log("Room alignment completed.");
+                        //Debug.Log("Room alignment completed.");
 
                         if (CheckIntersection(dungeonPart))
                         {
                             dungeonPart.UnusedEntry(room2Entry);
                             randGenRoom.UnusedEntry(room1Entry);
-                            RetryPlacement(newGenRoom /*//Todo , alignedDoor*/);
+                            RetryPlacement(newGenRoom);
                             continue;
                         }
+
+                        // counts successfully positioned rooms.
+                        genRooms.Add(dungeonPart);
+                    }
+                    else
+                    {
+                        // Release the previously reserved doorway.
+                        randGenRoom.UnusedEntry(room1Entry);
+
+                        Destroy(newGenRoom);
                     }
                 }
             }
@@ -206,7 +207,7 @@ public class DungeonGenerator : MonoBehaviour
     }
 
     //might need a better safety feature
-    private void RetryPlacement(GameObject item /*//TODO , GameObject door*/)
+    private void RetryPlacement(GameObject item)
     {
         DungeonPart randGenRoom = null;
         Transform room1Entry = null;
@@ -227,6 +228,14 @@ public class DungeonGenerator : MonoBehaviour
             retryIndex++;
         }
 
+        if (randGenRoom == null || room1Entry == null)
+        {
+            Debug.LogWarning("No available room entry points to retry.");
+
+            Destroy(item);
+            return;
+        }
+
         if (item.TryGetComponent<DungeonPart>(out DungeonPart dungeonPart))
         {
             if (dungeonPart.HasAvailableEntry(out Transform room2Entry))
@@ -235,7 +244,6 @@ public class DungeonGenerator : MonoBehaviour
                 // door.transform.position = room1Entry.transform.position;
                 // door.transform.rotation = room1Entry.transform.rotation;
                 AlignRooms(
-                    //? randGenRoom.transform, //removed, cuz argument 1 isn't used.
                     item.transform,
                     room1Entry,
                     room2Entry
@@ -252,7 +260,14 @@ public class DungeonGenerator : MonoBehaviour
                     RetryPlacement(item);
                 }
             }
+        }
 
+        if (!CheckIntersection(dungeonPart))
+        {
+            if (!genRooms.Contains(dungeonPart))
+            {
+                genRooms.Add(dungeonPart);
+            }
         }
     }
 
