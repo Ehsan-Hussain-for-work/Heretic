@@ -13,6 +13,9 @@ public class DungeonPart : MonoBehaviour
     //public new Collider collider; //checks overlapping rooms (new = hide an accessible member)
     public new Collider[] colliders;
 
+    [SerializeField]
+    private float barricadeOffset = 2f;
+
     public bool HasAvailableEntry(out Transform entrypoint)
     {
         if (entries == null || entries.Count == 0)
@@ -88,8 +91,9 @@ public class DungeonPart : MonoBehaviour
                 {
                     GameObject wall = Instantiate(barricade);
                     //?wall.GetComponent<NetworkObject>().Spawn(true);
-                    wall.transform.position = entry.transform.position;
+                    wall.transform.position = entry.transform.position + (Vector3.up * barricadeOffset);
                     wall.transform.rotation = entry.transform.rotation;
+                    wall.transform.SetParent(transform); // so it belongs to the room
                 }
             }
         });

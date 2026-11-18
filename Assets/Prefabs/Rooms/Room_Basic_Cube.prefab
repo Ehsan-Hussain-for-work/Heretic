@@ -1866,6 +1866,7 @@ MonoBehaviour:
   - {fileID: 8282513360163514185}
   colliders:
   - {fileID: 1038174352600363315}
+  barricadeOffset: 1.125
 --- !u!1 &9169756676215078749
 GameObject:
   m_ObjectHideFlags: 0

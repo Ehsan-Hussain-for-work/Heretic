@@ -57,6 +57,7 @@ public class DungeonGenerator : MonoBehaviour
                     transform.position,
                     transform.rotation
                 );
+                Debug.Log("Starting room instantiated: " + genRoom.name);
 
                 if (genRoom.TryGetComponent<DungeonPart>(out DungeonPart dungeonPart))
                 {
@@ -64,6 +65,7 @@ public class DungeonGenerator : MonoBehaviour
                     //dungeonPart.Spawn(true);
                     genRooms.Add(dungeonPart);
                 }
+                Debug.Log("Room added to generation list: " + dungeonPart.name);
 
             }
             else
@@ -90,6 +92,7 @@ public class DungeonGenerator : MonoBehaviour
                 if (randGenRoom == null || room1Entry == null)
                 {
                     Debug.LogWarning("No available room entry points!");
+                    //* Destroy(item); //idk what "item" reps here.
                     break;
                 }
 
@@ -119,13 +122,16 @@ public class DungeonGenerator : MonoBehaviour
                     if (dungeonPart.HasAvailableEntry(out Transform room2Entry))
                     {
                         genRooms.Add(dungeonPart);
+                        Debug.Log("Aligning new room: " + newGenRoom.name);
                         //TODO alignedDoor.transform.position = room1Entry.position;
                         //TODO alignedDoor.transform.rotation = room2Entry.rotation;
                         AlignRooms(
                             //? randGenRoom.transform, //arg 1 isn't used.
                             newGenRoom.transform,
                             room1Entry,
-                            room2Entry);
+                            room2Entry
+                        );
+                        Debug.Log("Room alignment completed.");
 
                         if (CheckIntersection(dungeonPart))
                         {
@@ -149,12 +155,12 @@ public class DungeonGenerator : MonoBehaviour
             Vector3.up
         );
 
-        // room2.TransformPoint(room2Entry.position);
-        // room2.eulerAngles = new Vector3(
-        //     room2.eulerAngles.x,
-        //     room2.eulerAngles.y + angle,
-        //     room2.eulerAngles.z
-        // ); //room2 faces room1 (eulerAngles = X Y Z angles in 3D degrees rotation)
+        //* room2.TransformPoint(room2Entry.position);
+        //* room2.eulerAngles = new Vector3(
+        //*     room2.eulerAngles.x,
+        //*     room2.eulerAngles.y + angle,
+        //*     room2.eulerAngles.z
+        //* ); //room2 faces room1 (eulerAngles = X Y Z angles in 3D degrees rotation)
         room2.Rotate(Vector3.up, angle);
 
         //calcs the diff between room1 & room2
@@ -174,15 +180,16 @@ public class DungeonGenerator : MonoBehaviour
 
             Collider[] hits = Physics.OverlapBox(
                 collider.bounds.center,
-                collider.bounds.size / 2, //apparently OverlapBox() doubles this
+                collider.bounds.extents, //*collider.bounds.size / 2, //apparently OverlapBox() doubles this
                 Quaternion.identity, roomsLM //apparently this isn't taking rotations into count
             );
 
             foreach (Collider hit in hits)
             {
-                bool didHitDungeonPart = false;
+                //bool didHitDungeonPart = false;
 
-                if (hit == collider) //room hits itself
+                //if (hit == collider) //room hits itself
+                if (hit.transform.IsChildOf(dungeonPart.transform))
                 {
                     continue; //"we don't care" response
                 }
