@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,6 +19,10 @@ public class AIControllerBomber : MonoBehaviour
     [Header("Attack Settings")]
     public Collider bombAreaCollider;
     public Collider explosionField;
+    public ParticleSystem explosionEffect;
+    public float bombTimer = 3f; 
+    public Boolean insideRange = false;
+    public int hitCount = 0;
 
 
     [Header("Vision Settings")]
@@ -47,15 +52,46 @@ public class AIControllerBomber : MonoBehaviour
         StateMachine.AddState(new IdleStateBomber(this));
         StateMachine.AddState(new RoamingStateBomber(this));
         StateMachine.AddState(new ChaseStateBomber(this));
-        StateMachine.AddState(new AttackStateBomber(this)); // Add the new AttackState 
+        StateMachine.AddState(new AttackStateBomber(this)); 
 
         StateMachine.TransitionToState(StateType.Idle);
+        
+        explosionEffect.Pause();
     }
 
     void Update()
     {
         StateMachine.Update();
         currentState = StateMachine.GetCurrentStateType();
+
+        if (aiAnimationController.IsPlayerInsideRange() && !isDead)
+        {
+            insideRange = true;
+        } 
+        else
+        {
+            insideRange = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (insideRange && !isDead)
+        {
+            bombTimer -= Time.fixedDeltaTime;
+            if (bombTimer <= 0f)
+            {
+                aiAnimationController.animator.SetTrigger("doExplosion");
+                Agent.isStopped = true;
+
+                explosionEffect.Play();
+                Destroy(gameObject, 1.5f); // Destroy the bomber after 1.5 second
+            }
+        }
+        else
+        {
+            bombTimer = 3f;
+        }
     }
 
 
@@ -123,6 +159,49 @@ public class AIControllerBomber : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + leftBoundary * viewDistance);
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary * viewDistance);
     }
+
+    public bool CheckBombExplosionAreaCollision(out Collider collidedObject, string Tag)
+    {
+        // You can define these in AIController (leftHandPoint, rightHandPoint)
+        Collider explosionField = this.explosionField;
+
+        // Overlap check
+        Collider[] hits = Physics.OverlapSphere(explosionField.transform.position, 2, PlayerLayer);
+
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag(Tag))
+            {
+                collidedObject = hit;
+                return true;
+            }
+        }
+
+        collidedObject = null;
+        return false;
+    }
+
+    public bool CheckPlayerBomberCollision(out Collider collidedObject, string Tag)
+    {
+        // You can define these in AIController (leftHandPoint, rightHandPoint)
+        Collider bombAreaCollider = this.bombAreaCollider;
+
+        // Overlap check
+        Collider[] hits = Physics.OverlapSphere(bombAreaCollider.transform.position, 2, PlayerLayer);
+
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag(Tag))
+            {
+                collidedObject = hit;
+                return true;
+            }
+        }
+
+        collidedObject = null;
+        return false;
+    }
+
 
     public void Die()
     {

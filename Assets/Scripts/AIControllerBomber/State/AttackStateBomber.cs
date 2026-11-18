@@ -33,13 +33,6 @@ public class AttackStateBomber : IState
             aiController.StateMachine.TransitionToState(StateType.Chase);
             return;
         }
-
-        // Limit how often the AI attacks 
-        if (Time.time - lastAttackTime > attackCooldown)
-        {
-            lastAttackTime = Time.time;
-            
-        }
     }
 
 

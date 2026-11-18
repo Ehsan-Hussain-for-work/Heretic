@@ -1,3 +1,4 @@
+using System;
 using UnityEngine; 
 using UnityEngine.AI; 
 using UnityEngine.SceneManagement;
@@ -27,6 +28,27 @@ public class AIAnimationControllerBomber : MonoBehaviour
     {
         float speed = agent != null ? agent.velocity.magnitude : 0f;
         animator.SetFloat("CharacterSpeed", speed);
+    }
+
+    public Boolean HitPlayerBomb() // Attack Animation Event to check if the player his hit 
+    {
+        Collider objectHit;
+        if (aiController.CheckBombExplosionAreaCollision(out objectHit, "Player"))
+        {
+            Debug.Log("Player hit by the explosion!");
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean IsPlayerInsideRange()
+    {
+        Collider objectHit;
+        if (aiController.CheckPlayerBomberCollision(out objectHit, "Player"))
+        {
+            return true;
+        }
+        return false;
     }
 
 }

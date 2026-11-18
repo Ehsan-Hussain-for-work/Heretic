@@ -29,7 +29,7 @@ public class AIAnimationController : MonoBehaviour
         animator.SetFloat("CharacterSpeed", speed);
     }
 
-    void HitPlayerHook() // Attack Animation Event to check if the player his hit 
+    void HitPlayerUppercut() // Attack Animation Event to check if the player his hit 
     {
         GameObject objectHit;
         if (aiController.CheckHandsCollision(out objectHit, "Player"))
