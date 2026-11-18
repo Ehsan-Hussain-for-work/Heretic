@@ -13,6 +13,7 @@ public class CameraScript : MonoBehaviour
     public void OnLook(InputValue value)
     {
         lookInput = value.Get<Vector2>();
+        Debug.Log("CameraScript got look input: " + lookInput);
     }
 
     public void OnCancel(InputValue value)
@@ -38,5 +39,6 @@ public class CameraScript : MonoBehaviour
         verticalLook = Mathf.Clamp(verticalLook, -lookLimit, lookLimit);
 
         transform.localRotation = Quaternion.Euler(verticalLook, 0f, 0f);
+        Debug.Log($"verticalLook={verticalLook}  actual={transform.localEulerAngles.x}  limit={lookLimit}");
     }
 }

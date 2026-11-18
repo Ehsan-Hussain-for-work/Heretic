@@ -11,18 +11,23 @@ public class PlayerController : MonoBehaviour
     public float groundCheckDistance = 0.2f;
 
     Rigidbody rb;
+    [Header("Camera")]
     public float mouseSensitivity = 2.0f;
-
+    public float lookLimit = 80f;
+    
     private bool isGrounded;
     private bool jumpRequested;
 
     private float xRotation = 0f;
     private float yRotation = 0f;
+    
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true; // don't let collisions tip the player over
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -33,18 +38,20 @@ public class PlayerController : MonoBehaviour
         yRotation += mouseX;
         xRotation -= mouseY;
 
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -lookLimit, lookLimit);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         // Ground Check using a Raycast downwards
         isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
 
-        // Capture jump input in Update so frames aren't missed
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            jumpRequested = true;
-        }
+
+        //// Capture jump input in Update so frames aren't missed
+        //if (Input.GetButtonDown("Jump") && isGrounded)
+        //{
+        //    jumpRequested = true;
+        //}
         Camera.main.GetComponent<Camera>().fieldOfView = 60f;
     }
 
@@ -64,16 +71,16 @@ public class PlayerController : MonoBehaviour
 
         Vector3 targetVelocity = (forward * v + right * h) * moveSpeed;
 
-        // Apply Jump or keep current vertical velocity
-        if (jumpRequested)
-        {
-            targetVelocity.y = jumpForce;
-            jumpRequested = false;
-        }
-        else
-        {
-            targetVelocity.y = rb.linearVelocity.y; // keep gravity untouched
-        }
+        //// Apply Jump or keep current vertical velocity
+        //if (jumpRequested)
+        //{
+        //    targetVelocity.y = jumpForce;
+        //    jumpRequested = false;
+        //}
+        //else
+        //{
+        //    targetVelocity.y = rb.linearVelocity.y; // keep gravity untouched
+        //}
 
         rb.linearVelocity = targetVelocity;
     }
