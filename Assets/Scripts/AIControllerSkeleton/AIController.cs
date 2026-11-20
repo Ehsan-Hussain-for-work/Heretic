@@ -39,6 +39,14 @@ public class AIController : MonoBehaviour
     // Add State Machine code Here
     void Start()
     {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            Player = playerObject.transform;
+        }
+
+
         Agent = GetComponent<NavMeshAgent>();
         aiAnimationController = GetComponent<AIAnimationController>();
         // Animator = GetComponent<Animator>(); // Commented out since we're not using animations
@@ -89,7 +97,7 @@ public class AIController : MonoBehaviour
         if (Physics.Raycast(eyePosition, directionToPlayer, out RaycastHit hit, viewDistance))
         {
             // If hit the player
-            if (hit.transform == Player)
+            if (hit.transform == Player || hit.transform.IsChildOf(Player))
             {
                 lastSeenTime = Time.time;
                 return true;
@@ -146,6 +154,21 @@ public class AIController : MonoBehaviour
         }
         collidedObject = null;
         return false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isDead)
+            return;
+
+        health -= damage;
+
+        Debug.Log("Enemy Health: " + health);
+
+        if (health <= 0)
+        {
+            Die();
+        }
     }
 
 

@@ -35,8 +35,8 @@ public class AIAnimationControllerBomber : MonoBehaviour
         Collider objectHit;
         if (aiController.CheckBombExplosionAreaCollision(out objectHit, "Player"))
         {
-            Debug.Log("Player hit by the explosion!");
-            return true;
+            PlayerHealth playerHealth = objectHit.GetComponentInParent<PlayerHealth>();
+            if (playerHealth != null) { playerHealth.TakeDamage(aiController.damage); }
         }
         return false;
     }

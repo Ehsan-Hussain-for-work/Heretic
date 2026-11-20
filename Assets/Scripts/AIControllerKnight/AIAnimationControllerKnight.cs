@@ -28,14 +28,4 @@ public class AIAnimationControllerKnight : MonoBehaviour
         float speed = agent != null ? agent.velocity.magnitude : 0f;
         animator.SetFloat("CharacterSpeed", speed);
     }
-
-    void HitPlayerHook() // Attack Animation Event to check if the player his hit 
-    {
-        GameObject objectHit;
-        if (aiController.CheckHammerCollision(out objectHit, "Player"))
-        {
-            Debug.Log("Player hit by a punch!");
-        }
-    }
-
 }

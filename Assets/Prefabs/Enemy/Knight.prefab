@@ -212,11 +212,11 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 3b3662cefade54e4984fdf01f54077bf, type: 3}
   m_Controller: {fileID: 9100000, guid: fe20d2bb55438d84394d62f2039e280a, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AIControllerKnight
   Waypoints: []
-  Player: {fileID: 0}
+  Player: {fileID: 9016638989999336847, guid: 671e3066659c6da449829c826ad75f98, type: 3}
   AttackRange: 5
   PlayerLayer:
     serializedVersion: 2
@@ -279,7 +279,7 @@ MonoBehaviour:
   rightLegTransform: {fileID: 0}
   viewDistance: 10
   viewAngle: 90
-  eyeHeight: 1.6
+  eyeHeight: 0.5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1

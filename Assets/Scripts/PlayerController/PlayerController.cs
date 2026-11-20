@@ -1,40 +1,197 @@
+using System;
 using UnityEngine;
-
-[RequireComponent(typeof(CharacterController))]
+using UnityEngine.InputSystem.XR;
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5f;     // Movement speed
-    public float turnSpeed = 180f;   // Turning speed in degrees per second
+    [Header("Movement")]
+    public float moveSpeed = 6.0f;
+    public float jumpForce = 5.0f;
 
-    private CharacterController controller;
-    private Vector3 moveDirection = Vector3.zero;
-    private float gravity = 9.81f;
+    [Header("Ground Check")]
+    public LayerMask groundMask;
+    public float groundCheckDistance = 0.2f;
 
+    Rigidbody rb;
+    [Header("Camera")]
+    public float mouseSensitivity = 2.0f;
+    public float lookLimit = 80f;
+
+
+    private KeyCode blockKey = KeyCode.Mouse1; // right mouse
+    private KeyCode swordKey = KeyCode.Mouse0; // left mouse
+
+    private bool blockActive;
+    private bool swordActive;
+
+    private float blockDuration = 0.8f;
+    private float swordDuration = 1f;
+
+    private float blockTimer;
+    private float swordTimer;
+
+    private bool isGrounded;
+    private bool jumpRequested;
+
+    private float xRotation = 0f;
+    private float yRotation = 0f;
+
+
+    [Header("Enemy Attack Settings")]
+    public Animator animator;
+    public LayerMask enemyLayer;
+    public Collider weapon;
+    public int damage = 20;
+
+    public bool BlockActive => blockActive;
+    public bool SwordActive => swordActive;
     void Start()
     {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true; // don't let collisions tip the player over
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        animator = GetComponent<Animator>();
+    }
+
+    private void ReadInput()
+    {
+        blockActive = Input.GetKeyDown(blockKey); // only the press frame
+        swordActive = Input.GetKeyDown(swordKey); // only the press frame
+    }
+
+    private void HandleCombat()
+    {
+        if (blockTimer > 0)
+        {
+            blockTimer -= Time.deltaTime;
+            if (blockTimer <= 0)
+                animator.SetBool("blockActive", false);
+        }
+
+        if (swordTimer > 0)
+        {
+            swordTimer -= Time.deltaTime;
+            if (swordTimer <= 0)
+                animator.SetBool("swordActive", false);
+        }
+
+        if (blockActive && swordActive)
+            return;
+
+        bool busy = blockTimer > 0 || swordTimer > 0;
+
+        if (blockActive && !busy)
+        {
+            animator.SetBool("blockActive", true);
+            blockTimer = blockDuration;
+        }
+
+        if (swordActive && !busy)
+        {
+            animator.SetBool("swordActive", true);
+            swordTimer = swordDuration;
+        }
     }
 
     void Update()
     {
-        // Get input axes
-        float horizontal = Input.GetAxis("Horizontal"); // For turning
-        float vertical = Input.GetAxis("Vertical");     // For moving forward/backward
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * 8;
 
-        // Rotate the character based on horizontal input
-        transform.Rotate(0, horizontal * turnSpeed * Time.deltaTime, 0);
+        yRotation += mouseX;
 
-        // Move the character forward/backward
-        if (controller.isGrounded)
+        xRotation = Mathf.Clamp(xRotation, -lookLimit, lookLimit);
+
+        transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
+
+        // Ground Check using a Raycast downwards
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
+
+
+        //// Capture jump input in Update so frames aren't missed
+        //if (Input.GetButtonDown("Jump") && isGrounded)
+        //{
+        //    jumpRequested = true;
+        //}
+        Camera.main.GetComponent<Camera>().fieldOfView = 60f;
+
+
+        // Animator triggers
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
-            // Set move direction forward
-            moveDirection = transform.forward * vertical * moveSpeed;
+            moveSpeed = 0f;
+        } else
+        {
+            moveSpeed = 6f;
+        }
+            animator.SetFloat("playerSpeed", moveSpeed);
+        ReadInput();
+        HandleCombat();
+    }
+
+    void FixedUpdate()
+    {
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        // Move relative to facing direction, flattened to the ground
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
+        forward.Normalize();
+
+        Vector3 right = transform.right;
+        right.y = 0f;
+        right.Normalize();
+
+        Vector3 targetVelocity = (forward * v + right * h) * moveSpeed;
+
+        //// Apply Jump or keep current vertical velocity
+        //if (jumpRequested)
+        //{
+        //    targetVelocity.y = jumpForce;
+        //    jumpRequested = false;
+        //}
+        //else
+        //{
+        //    targetVelocity.y = rb.linearVelocity.y; // keep gravity untouched
+        //}
+
+        rb.linearVelocity = targetVelocity;
+    }
+    public void HitEnemies()
+    {
+        Collider sword = this.weapon;
+        Collider[] hits = Physics.OverlapSphere(sword.transform.position, 2, enemyLayer);
+
+        Debug.Log("Number of colliders detected: " + hits.Length);
+
+        foreach (var hit in hits)
+        {
+            Debug.Log("Detected: " + hit.name + " | Layer: " + LayerMask.LayerToName(hit.gameObject.layer));
         }
 
-        // Apply gravity
-        moveDirection.y -= gravity * Time.deltaTime;
+        foreach (var hit in hits)
+        {
+            AIController enemy = hit.GetComponentInParent<AIController>();
+            AIControllerBomber bomber = hit.GetComponentInParent<AIControllerBomber>();
+            AIControllerKnight knight = hit.GetComponentInParent<AIControllerKnight>();
 
-        // Move the character controller
-        controller.Move(moveDirection * Time.deltaTime);
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                Debug.Log("Enemy hit! Remaining health: " + enemy.health);
+            }
+            else if (bomber != null)
+            {
+                bomber.TakeDamage(damage);
+                Debug.Log("Bomber hit! Remaining health: " + bomber.health);
+            }
+            else if (knight != null)
+            {
+                knight.TakeDamage(damage);
+                Debug.Log("Knight hit! Remaining health: " + knight.health);
+            }
+        }
     }
+
 }

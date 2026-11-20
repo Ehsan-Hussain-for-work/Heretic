@@ -39,11 +39,18 @@ public class AIControllerBomber : MonoBehaviour
     [Header("Enemy Stats")]
     public int health = 100;
     public bool isDead = false;
-    public int damage = 20;
+    public int damage = 50;
 
     // Add State Machine code Here
     void Start()
     {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        if (playerObject != null)
+        {
+            Player = playerObject.transform;
+        }
+
         Agent = GetComponent<NavMeshAgent>();
         aiAnimationController = GetComponent<AIAnimationControllerBomber>();
         // Animator = GetComponent<Animator>(); // Commented out since we're not using animations
@@ -179,6 +186,21 @@ public class AIControllerBomber : MonoBehaviour
 
         collidedObject = null;
         return false;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (isDead)
+            return;
+
+        health -= damage;
+
+        Debug.Log("Enemy Health: " + health);
+
+        if (health <= 0)
+        {
+            Die();
+        }
     }
 
     public bool CheckPlayerBomberCollision(out Collider collidedObject, string Tag)

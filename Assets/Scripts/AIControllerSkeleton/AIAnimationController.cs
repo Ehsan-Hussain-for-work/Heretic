@@ -34,7 +34,8 @@ public class AIAnimationController : MonoBehaviour
         GameObject objectHit;
         if (aiController.CheckHandsCollision(out objectHit, "Player"))
         {
-            Debug.Log("Player hit by a punch!");
+            PlayerHealth playerHealth = objectHit.GetComponentInParent<PlayerHealth>();
+            if (playerHealth != null) { playerHealth.TakeDamage(aiController.damage); }
         }
     }
 
@@ -43,7 +44,8 @@ public class AIAnimationController : MonoBehaviour
         GameObject objectHit;
         if (aiController.CheckLegCollision(out objectHit, "Player"))
         {
-            Debug.Log("Player hit by a kick!");
+            PlayerHealth playerHealth = objectHit.GetComponentInParent<PlayerHealth>();
+            if (playerHealth != null) { playerHealth.TakeDamage(aiController.damage + 5); }
         }
     }
 
