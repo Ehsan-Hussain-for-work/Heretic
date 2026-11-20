@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 
 public class AIControllerBomber : MonoBehaviour
 {
@@ -68,8 +69,11 @@ public class AIControllerBomber : MonoBehaviour
 
     void Update()
     {
-        StateMachine.Update();
-        currentState = StateMachine.GetCurrentStateType();
+        if (!isDead)
+        {
+            StateMachine.Update();
+            currentState = StateMachine.GetCurrentStateType();
+        }
 
         if (aiAnimationController.IsPlayerInsideRange() && !isDead)
         {
@@ -169,7 +173,6 @@ public class AIControllerBomber : MonoBehaviour
 
     public bool CheckBombExplosionAreaCollision(out Collider collidedObject, string Tag)
     {
-        // You can define these in AIController (leftHandPoint, rightHandPoint)
         Collider explosionField = this.explosionField;
 
         // Overlap check
@@ -231,7 +234,7 @@ public class AIControllerBomber : MonoBehaviour
             return;
 
         Agent.isStopped = true;
-        Agent.enabled = false;
+
         aiAnimationController.animator.SetTrigger("doDeath");
 
         // Destroy the enemy after 3 seconds

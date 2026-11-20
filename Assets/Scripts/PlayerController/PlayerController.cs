@@ -158,40 +158,5 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = targetVelocity;
     }
-    public void HitEnemies()
-    {
-        Collider sword = this.weapon;
-        Collider[] hits = Physics.OverlapSphere(sword.transform.position, 2, enemyLayer);
-
-        Debug.Log("Number of colliders detected: " + hits.Length);
-
-        foreach (var hit in hits)
-        {
-            Debug.Log("Detected: " + hit.name + " | Layer: " + LayerMask.LayerToName(hit.gameObject.layer));
-        }
-
-        foreach (var hit in hits)
-        {
-            AIController enemy = hit.GetComponentInParent<AIController>();
-            AIControllerBomber bomber = hit.GetComponentInParent<AIControllerBomber>();
-            AIControllerKnight knight = hit.GetComponentInParent<AIControllerKnight>();
-
-            if (enemy != null)
-            {
-                enemy.TakeDamage(damage);
-                Debug.Log("Enemy hit! Remaining health: " + enemy.health);
-            }
-            else if (bomber != null)
-            {
-                bomber.TakeDamage(damage);
-                Debug.Log("Bomber hit! Remaining health: " + bomber.health);
-            }
-            else if (knight != null)
-            {
-                knight.TakeDamage(damage);
-                Debug.Log("Knight hit! Remaining health: " + knight.health);
-            }
-        }
-    }
 
 }

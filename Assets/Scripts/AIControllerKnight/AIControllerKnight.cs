@@ -63,8 +63,11 @@ public class AIControllerKnight : MonoBehaviour
 
     void Update()
     {
-        StateMachine.Update();
-        currentState = StateMachine.GetCurrentStateType();
+        if (!isDead)
+        {
+            StateMachine.Update();
+            currentState = StateMachine.GetCurrentStateType();
+        }
     }
 
 
@@ -177,8 +180,7 @@ public class AIControllerKnight : MonoBehaviour
             return;
 
         Agent.isStopped = true;
-        Agent.enabled = false;
-        
+
         aiAnimationController.animator.SetTrigger("doDeath");
 
         // Destroy the enemy after 3 seconds
