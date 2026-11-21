@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3430905915838786126}
   - component: {fileID: 8669073252305690530}
   - component: {fileID: 8100274321698122189}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 3370536504762777362}
   - component: {fileID: 421622428060002688}
   - component: {fileID: 6300037909217851721}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3401405268541483541}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chairs_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3682218000880464126}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chairs_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6370755795592182380}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Table_Set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 7619679544589263987}
   - component: {fileID: 415647992542800599}
   - component: {fileID: 4534064286185733856}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Table_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 6859211342339768138}
   - component: {fileID: 4332805057588143052}
   - component: {fileID: 4315915099715275379}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 3116321358567961424}
   - component: {fileID: 555530679354205451}
   - component: {fileID: 8429715005095660958}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 6607265196349888584}
   - component: {fileID: 6336191050892157861}
   - component: {fileID: 7443879539490603897}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -786,7 +786,7 @@ GameObject:
   - component: {fileID: 1370782769506985129}
   - component: {fileID: 5758916234556197936}
   - component: {fileID: 2249424093641172456}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
