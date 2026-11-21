@@ -179,13 +179,16 @@ public class AIControllerKnight : MonoBehaviour
         if (isDead)
             return;
 
-        Agent.isStopped = true;
+        isDead = true;
 
+        Agent.isStopped = true;
+        Agent.ResetPath();
+        Agent.enabled = false;
+
+        aiAnimationController.animator.SetFloat("CharacterSpeed", 0f);
         aiAnimationController.animator.SetTrigger("doDeath");
 
-        // Destroy the enemy after 3 seconds
         Destroy(gameObject, 5f);
-        isDead = true;
     }
 
 }

@@ -200,14 +200,16 @@ public class AIController : MonoBehaviour
         if (isDead)
             return;
 
-        Agent.isStopped = true;
-        StateMachine.TransitionToState(StateType.Idle);
+        isDead = true;
 
+        Agent.isStopped = true;
+        Agent.ResetPath();
+        Agent.enabled = false;
+
+        aiAnimationController.animator.SetFloat("CharacterSpeed", 0f);
         aiAnimationController.animator.SetTrigger("doDeath");
 
-        // Destroy the enemy after 3 seconds
         Destroy(gameObject, 5f);
-        isDead = true;
     }
 
 }

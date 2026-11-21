@@ -173,13 +173,15 @@ public class AIControllerBomber : MonoBehaviour
 
     public bool CheckBombExplosionAreaCollision(out Collider collidedObject, string Tag)
     {
-        Collider explosionField = this.explosionField;
+        SphereCollider sphere = this.explosionField as SphereCollider;
+        Vector3 center = sphere.transform.TransformPoint(sphere.center);
+        float radiusBomb = sphere.radius;
 
-        // Overlap check
-        Collider[] hits = Physics.OverlapSphere(explosionField.transform.position, 2, PlayerLayer);
+        Collider[] hits = Physics.OverlapSphere(center, radiusBomb, PlayerLayer);
 
         foreach (var hit in hits)
         {
+
             if (hit.CompareTag(Tag))
             {
                 collidedObject = hit;
@@ -208,7 +210,7 @@ public class AIControllerBomber : MonoBehaviour
 
     public bool CheckPlayerBomberCollision(out Collider collidedObject, string Tag)
     {
-        // You can define these in AIController (leftHandPoint, rightHandPoint)
+
         Collider bombAreaCollider = this.bombAreaCollider;
 
         // Overlap check
@@ -233,13 +235,16 @@ public class AIControllerBomber : MonoBehaviour
         if (isDead)
             return;
 
-        Agent.isStopped = true;
+        isDead = true;
 
+        Agent.isStopped = true;
+        Agent.ResetPath();
+        Agent.enabled = false;
+
+        aiAnimationController.animator.SetFloat("CharacterSpeed", 0f);
         aiAnimationController.animator.SetTrigger("doDeath");
 
-        // Destroy the enemy after 3 seconds
         Destroy(gameObject, 5f);
-        isDead = true;
     }
 
 }
