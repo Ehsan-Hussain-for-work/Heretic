@@ -924,6 +924,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4479862677649944114}
+  - component: {fileID: 5424581525811025319}
+  - component: {fileID: 8759089062428142917}
   m_Layer: 0
   m_Name: LudwigHolyBlade1
   m_TagString: Untagged
@@ -949,6 +951,43 @@ Transform:
   - {fileID: 7529420643559981587}
   m_Father: {fileID: 7142318495903937964}
   m_LocalEulerAnglesHint: {x: 6.133, y: -82.608, z: -70.978}
+--- !u!65 &5424581525811025319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846210361848673416}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 1.5, z: 0.2}
+  m_Center: {x: 0.00000011649972, y: 1, z: 0.0000019079978}
+--- !u!114 &8759089062428142917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846210361848673416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587dab0eb84eb40409ff3e970f7a8f75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  cooldown: 1
+  isActive: 1
+  damage: 25
+  playerController: {fileID: 5384543573597765015}
 --- !u!1 &4139953882171565868
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,6 +2492,7 @@ GameObject:
   - component: {fileID: 1411832214771186983}
   - component: {fileID: 4943310191722340344}
   - component: {fileID: 6518665834611634738}
+  - component: {fileID: 2232171987465844675}
   m_Layer: 3
   m_Name: monkUpdate@Sword And Shield Idle
   m_TagString: Player
@@ -2520,6 +2560,12 @@ MonoBehaviour:
   groundCheckDistance: 0.2
   mouseSensitivity: 2
   lookLimit: 80
+  animator: {fileID: 3152983420198795253}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  weapon: {fileID: 5424581525811025319}
+  damage: 20
 --- !u!136 &6293513151647427415
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2641,6 +2687,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2232171987465844675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8532731190546315061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f466ca4d76c85e94baad047ee00f1049, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  maxHealth: 100
 --- !u!1 &8697597007457208354
 GameObject:
   m_ObjectHideFlags: 0
